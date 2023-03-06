@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: cloud-stream-demo
+  profiles:
+    active:
+    - pubsub

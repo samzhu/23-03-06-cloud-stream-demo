@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.4'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudGcpVersion', "4.1.1")
+	set('springCloudVersion', "2022.0.1")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder'
+	// https://central.sonatype.com/artifact/com.google.cloud/spring-cloud-gcp-pubsub-stream-binder/4.1.1
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+	// https://central.sonatype.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-kafka/4.0.1
+	implementation 'io.nats:nats-spring-cloud-stream-binder:0.5.6'
+	// https://central.sonatype.com/artifact/io.nats/nats-spring-cloud-stream-binder/0.5.6/overview
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
+}
+
+dependencyManagement {
+  imports {
+    mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+  }
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

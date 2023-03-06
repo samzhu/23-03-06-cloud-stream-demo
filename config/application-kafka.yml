@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        order-created-out:
+          destination: ORDERS.CREATED
+          content-type: application/json
+          binder: kafka1
+        orderCreated-in-0:
+          destination: ORDERS.CREATED
+          content-type: application/json
+          group: orders
+          binder: kafka1
+      binders:
+        kafka1:
+          type: kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: localhost:9092

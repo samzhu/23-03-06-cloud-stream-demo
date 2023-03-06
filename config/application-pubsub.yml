@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        order-created-out:
+          destination: ORDERS.CREATED
+          content-type: application/json
+          binder: pubsub1
+        orderCreated-in-0:
+          destination: ORDERS.CREATED
+          content-type: application/json
+          group: orders
+          binder: pubsub1
+      binders:
+        pubsub1:
+          type: pubsub
