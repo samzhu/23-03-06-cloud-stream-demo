@@ -117,7 +117,8 @@ spring:
 
 ## 備註
 
-1. 透過此範例, 可以在 application.yml 中進行 spring.application.profiles.active 來做快速切換試驗
-2. Kafka 不支援 ORDERS.* 萬用字元，因此在設定中應避免使用。
+1. 透過此範例，可以在 application.yml 中進行 spring.application.profiles.active 來做快速切換試驗。
+2. 在 GCP 範例中會建立 ORDERS.CREATED Topic 以及 ORDERS.CREATED.orders 的 Subscription。
+3. Kafka 不支援 ORDERS.* 萬用字元，因此在設定中應避免使用。
 
 除此之外，還可以根據實際需要進行其他設定，例如指定消息的 Content-Type、使用 SSL/TLS 加密等等。
