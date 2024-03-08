@@ -2,7 +2,11 @@ package com.example.demo;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.cloud.function.cloudevent.CloudEventMessageBuilder;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +29,12 @@ public class PublishController {
     public void publish(@RequestParam("msg") String msg) {
 
         MsgDTO msgDTO = new MsgDTO(counter.incrementAndGet() + ":" + msg);
+        Message<MsgDTO> message = CloudEventMessageBuilder.withData(
+                msgDTO)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                .build();
 
-        streamBridge.send(bindingName, msgDTO);
+        streamBridge.send(bindingName, message);
 
     }
 
