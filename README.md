@@ -38,7 +38,10 @@ private final String bindingName = "order-created-out";
 @GetMapping("/publish")
 public void publish(@RequestParam("msg") String msg) {
     MsgDTO msgDTO = new MsgDTO(counter.incrementAndGet() + ":" + msg);
-    streamBridge.send(bindingName, msgDTO);
+    Message<MsgDTO> message = CloudEventMessageBuilder.withData(msgDTO)
+        .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+        .build();
+    streamBridge.send(bindingName, message);
 }
 
 ```
